@@ -1,18 +1,20 @@
 <template>
   <div class="poke-card">
     <header>
-      001 - Venonat
+      {{ '#'+pokemon.id }} - {{ pokemonName }}
     </header>
     <div class="pokemon-img">
       <img 
-        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/48.png" 
-        alt="venonat"
+        :src="pokemon.sprites.front_default" 
+        :alt="pokemonName"
+        width="100%"
+        height="100%"
       >
     </div>
     <div class="pokemon-info">
-      <p>Ability: <strong>compound-eyes</strong></p>
-      <p>Move: <strong>tackle</strong></p>
-      <p>Type: <strong>bug</strong></p>
+      <p>Ability: <strong>{{ pokemon.abilities[0].ability.name }}</strong></p>
+      <p>Move: <strong>{{ pokemon.moves[0].move.name }}</strong></p>
+      <p>Type: <strong>{{ pokemon.types[0].type.name }}</strong></p>
     </div>
   </div>
 </template>
@@ -21,12 +23,16 @@
 export default {
   name: 'PokeCard',
   props: {
-    
+    pokemonName: String
   },
   data: () => {
     return {
-      
+      pokemon: {}
     }
+  },
+  mounted: async function () {
+    this.pokemon = await this.$store.dispatch('showPokemon', this.pokemonName);
+    console.log(this.pokemon)
   }
 }
 </script>
@@ -34,33 +40,38 @@ export default {
 
 <style scoped>
   .poke-card {
-    width: 200px;
-    height: 200px;
-    border: 1px solid #676798;
+    flex: 1 1 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     margin-bottom: 20px;
+    padding-bottom: 20px;
+    margin-right: 20px;
+    border-left: 1px solid #676798;
+    border-right: 1px solid #676798;
+    border-radius: 5px;
   }
 
   .poke-card header {
     background: #676798;
-    font-size: 1.0rem;
+    font-size: 1.4rem;
     width: 100%;
+    color: whitesmoke;
+    font-weight: bold;
   }
 
   .pokemon-img {
     margin: 0 auto;
     padding: 0;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
   }
 
   .pokemon-info {
     margin: 0 auto;
     padding: 0;
-    font-size: 1rem;
+    font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

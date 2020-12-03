@@ -2,16 +2,12 @@
   <fieldset>
     <legend>Pokemon List</legend>
     <div class="poke-list">
-      <PokeCard key="0"/>
-      <PokeCard key="1"/>
-      <PokeCard key="3"/>
-      <PokeCard />
-      <PokeCard />
-      <PokeCard />
-      <PokeCard />
-      <PokeCard />
-      <PokeCard />
-    </div>  
+      <PokeCard 
+        v-for="pokemon in pokemons" 
+        :key="pokemon.name"
+        :pokemonName="pokemon.name"
+      />
+    </div> 
     <div class="pagination">
       <button>Back</button>
       {{ page }}
@@ -28,13 +24,16 @@
     components: {
       PokeCard
     },
-    props: {
-      generationId: Number,
-    },
-    data: () => {
+    data: function () {
       return {
-        generation: {name: 'Generation 1', mainRegion: 'kanto', pokemonsCount: 32, movesCount: 12 },
-        page: "0"
+        page: 0
+      }
+    },
+    computed: {
+      pokemons: {
+        get: function() {
+          return this.$store.state.generation.pokemon_species;
+        }
       }
     }
   }
@@ -45,18 +44,16 @@
   fieldset {
     display: flex;
     flex-direction: column;
-    max-width: 1000px;
-    border: 4px solid #676798;
-    border-radius: 5%;
-    margin: 60px auto;
+    border: none;
+    margin: 30px 20px;
   }
   .poke-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
     font-size: 1.5rem;
     padding: 20px 20px;
+    justify-content: center;
   }
 
   .poke-list legend {

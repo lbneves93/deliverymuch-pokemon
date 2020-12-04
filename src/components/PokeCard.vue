@@ -9,7 +9,9 @@
         :alt="pokemon.name"
         width="100%"
         height="100%"
+        v-if="pokemon.sprites.front_default"
       >
+      <Skeleton class="skeleton-img" v-else/> 
     </div>
     <div class="pokemon-info">
       <p>Ability: <strong>{{ pokemon.abilities.length ? pokemon.abilities[0].ability.name : '---' }}</strong></p>
@@ -20,8 +22,13 @@
 </template>
 
 <script>
+import { Skeleton } from 'vue-loading-skeleton';
+
 export default {
   name: 'PokeCard',
+  components: {
+    Skeleton
+  },
   props: {
     pokemonId: String
   },
@@ -105,6 +112,11 @@ export default {
 
   .pokemon-info p {
     margin: 0;
+  }
+
+  .skeleton-img {
+    width: 150px;
+    height: 150px;
   }
   
 </style>

@@ -2,7 +2,7 @@
   <fieldset class="generation-header">
     <legend>Generation Information</legend>
     <div class="generation-header-info">
-      <p>Name: <strong>{{ generation.name }}</strong></p>
+      <p>Name: <strong>{{ generation.name | generation }}</strong></p>
       <p>Main Region: <strong>{{ generation.main_region.name }}</strong></p>
       <p>Number of Pokemons: <strong>{{ generation.pokemon_species.length }}</strong></p>
       <p>Number of Moves: <strong>{{ generation.moves.length }}</strong></p>
@@ -37,6 +37,7 @@
     border: 2px solid #676798;
     border-radius: 5px;
     margin: 0 auto;
+    margin-top: 40px;
   }
 
   .generation-header legend {

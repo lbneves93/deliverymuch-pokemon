@@ -1,20 +1,20 @@
 <template>
   <div class="poke-card">
     <header>
-      {{ '#'+pokemon.id }} - {{ pokemonName }}
+      {{ '#'+pokemon.id }} - {{ pokemon.name }}
     </header>
     <div class="pokemon-img">
-      <img 
+      <img
         :src="pokemon.sprites.front_default" 
-        :alt="pokemonName"
+        :alt="pokemon.name"
         width="100%"
         height="100%"
       >
     </div>
     <div class="pokemon-info">
-      <p>Ability: <strong>{{ pokemon.abilities[0].ability.name }}</strong></p>
-      <p>Move: <strong>{{ pokemon.moves[0].move.name }}</strong></p>
-      <p>Type: <strong>{{ pokemon.types[0].type.name }}</strong></p>
+      <p>Ability: <strong>{{ pokemon.abilities.length ? pokemon.abilities[0].ability.name : '---' }}</strong></p>
+      <p>Move: <strong>{{ pokemon.moves.length ? pokemon.moves[0].move.name : '---' }}</strong></p>
+      <p>Type: <strong>{{ pokemon.types.length ? pokemon.types[0].type.name : '---' }}</strong></p>
     </div>
   </div>
 </template>
@@ -23,16 +23,41 @@
 export default {
   name: 'PokeCard',
   props: {
-    pokemonName: String
+    pokemonId: String
   },
   data: () => {
     return {
-      pokemon: {}
+      pokemon: {
+        id: 0,
+        sprites: {
+          front_default: ''
+        },
+        abilities: [
+          {
+            ability: {
+              name: ''
+            }
+          }  
+        ],
+        moves: [
+          {
+            move: {
+              name: ''
+            }
+          }  
+        ],
+        types: [
+          {
+            type: {
+              name: ''
+            }
+          }  
+        ]
+      }
     }
   },
   mounted: async function () {
-    this.pokemon = await this.$store.dispatch('showPokemon', this.pokemonName);
-    console.log(this.pokemon)
+    this.pokemon = await this.$store.dispatch('showPokemon', this.pokemonId);
   }
 }
 </script>
@@ -40,7 +65,7 @@ export default {
 
 <style scoped>
   .poke-card {
-    flex: 1 1 300px;
+    flex: 0 1 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -51,6 +76,7 @@ export default {
     border-left: 1px solid #676798;
     border-right: 1px solid #676798;
     border-radius: 5px;
+    margin-top: 30px;
   }
 
   .poke-card header {

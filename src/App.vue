@@ -2,7 +2,7 @@
   <div id="app">
     <h1 class="title">Pokemon Generations</h1>
     <div class="fields">
-      <select 
+      <!-- <select 
         v-model="selectedGeneration"
         @change="loadGeneration()"
       >
@@ -14,13 +14,21 @@
         >
           {{ generation.name }}
         </option>
-      </select>
+      </select> -->
+      <div class="generation-buttons">
+        <button 
+          v-for="(generation, key) in generations"
+          :key="key"
+          @click="loadGeneration(key+1)"
+          :class="selectedGeneration == key+1 ? 'active' : ''"
+        >
+          {{ generation.name | generation }}
+        </button>
+      </div>
       <GenerationHeader class="generation-header" :generationId="selectedGeneration"/>
-      <input v-model="search" type="text" placeholder="Pesquisar...">
+      <!-- <input v-model="search" type="text" placeholder="Pesquisar..."> -->
     </div>
-    <div class="generation-data">
-      <PokeList class="poke-list"/>
-    </div>
+    <PokeList class="poke-list"/>
   </div>
 </template>
 
@@ -41,14 +49,15 @@
         search: ''
       }
     },
-    mounted: async function () {
+    created: async function () {
       await this.$store.dispatch('listGenerations');
       this.generations = await this.$store.state.generations;
-      this.loadGeneration();
+      await this.loadGeneration(1);
     },
     methods: {
-      loadGeneration: function () {
-        this.$store.dispatch('showGeneration', this.selectedGeneration);
+      loadGeneration: function (id) {
+        this.selectedGeneration = id;
+        this.$store.dispatch('showGeneration', id);
       }
     }
   }
@@ -80,15 +89,16 @@
     font-size: 2.5rem;
     color: #676798;
     padding-bottom: 20px;
+    margin: 0 auto;
   }
 
   .fields {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
     justify-content: space-around;
   }
 
@@ -110,12 +120,32 @@
     margin-left: 50px;
   }
 
-  .generation-data {
+  .generation-buttons {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
-    align-items: flex-start;
     justify-content: space-between;
-    width: 100%;
+    width: 1000px;
+  }
+
+  .generation-buttons button {
+    border: 1px solid #676798;
+    border-radius: 5px;
+    font-size: 1.0rem;
+    height: 40px;
+    background-color: #a4a4c1;
+    outline: none;
+  }
+  .generation-buttons button:hover {
+    background-color: #676798;
+    cursor: pointer;
+  }
+  .generation-buttons button:focus {
+    background-color: #676798;
+    cursor: pointer;
+    color: whitesmoke;
+  }
+  .active {
+    background-color: #676798;
+    color: whitesmoke;
   }
 </style>

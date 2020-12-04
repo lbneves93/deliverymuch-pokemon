@@ -39,8 +39,8 @@ export default new Vuex.Store({
         context.commit('updateGeneration', response.data);
       })
     },
-    async showPokemon (context, name) {
-      return await axios.get(`${apiUrl}/pokemon/${name}`).then(response => {
+    async showPokemon (context, id) {
+      return await axios.get(`${apiUrl}/pokemon/${id}`).then(response => {
         return response.data;
       })
     }

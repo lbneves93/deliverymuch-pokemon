@@ -1,17 +1,27 @@
 <template>
   <fieldset>
-    <legend>Pokemon List</legend>
+    <!-- <legend>Pokemon List</legend> -->
     <div class="poke-list">
       <PokeCard 
         v-for="pokemon in pokemons" 
         :key="pokemon.name"
-        :pokemonName="pokemon.name"
+        :pokemonId="pokemon.url.split('/')[6]"
       />
     </div> 
     <div class="pagination">
-      <button>Back</button>
+      <button 
+        @click="backPage()"
+        :disabled="page == 1"
+      >
+        Back
+      </button>
       {{ page }}
-      <button>Next</button>
+      <button 
+        @click="nextPage()"
+        :disabled="page >= totalPokemons / limit"
+      >
+        Next
+      </button>
     </div>
   </fieldset>
 </template>
@@ -24,16 +34,46 @@
     components: {
       PokeCard
     },
+    props: {
+      pokemonsList: Array
+    },
     data: function () {
       return {
-        page: 0
+        page: 1,
+        limit: 20,
+        offset: 0       
       }
     },
     computed: {
-      pokemons: {
-        get: function() {
-          return this.$store.state.generation.pokemon_species;
+      pokemons: function() {
+        return this.$store.state.generation.pokemon_species.slice(this.offset, this.page * this.limit);
+      },
+      generation: function() {
+        return this.$store.state.generation;
+      },
+      totalPokemons: function() {
+        return this.generation.pokemon_species.length;
+      }
+    },
+    watch: {
+      generation: function (newGeneration, oldGeneration) {
+        if(newGeneration != oldGeneration) {
+          this.page = 1;
+          this.offset = 0;
         }
+      }
+    },
+    methods: {
+      paginatedPokemons: function () {
+        return this.pokemonsList.slice(this.offset, this.page * this.limit);
+      },
+      backPage: function () {
+        this.offset -= this.limit;
+        this.page--;
+      },
+      nextPage: function () {
+        this.offset += this.limit;
+        this.page++;
       }
     }
   }
@@ -45,14 +85,14 @@
     display: flex;
     flex-direction: column;
     border: none;
-    margin: 30px 20px;
+    margin: 10px 20px;
   }
   .poke-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     font-size: 1.5rem;
-    padding: 20px 20px;
+    padding: 10px 20px;
     justify-content: center;
   }
 

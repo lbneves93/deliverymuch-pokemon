@@ -85,7 +85,7 @@
     display: flex;
     flex-direction: column;
     border: none;
-    margin: 10px 20px;
+    margin: 10px auto;
   }
   .poke-list {
     display: flex;
@@ -94,6 +94,7 @@
     font-size: 1.5rem;
     padding: 10px 20px;
     justify-content: center;
+    margin: 0 auto;
   }
 
   .poke-list legend {

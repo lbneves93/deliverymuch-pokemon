@@ -90,6 +90,7 @@
     color: #676798;
     padding-bottom: 20px;
     margin: 0 auto;
+    max-width: 90%;
   }
 
   .fields {
@@ -100,6 +101,7 @@
     margin: 0 auto;
     padding: 10px;
     justify-content: space-around;
+    max-width: 90%;
   }
 
   .fields select {
@@ -124,7 +126,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 1000px;
+    align-items: center;
+    margin: 20px;
   }
 
   .generation-buttons button {
@@ -134,6 +137,8 @@
     height: 40px;
     background-color: #a4a4c1;
     outline: none;
+    flex: 1 1 auto;
+    margin: 5px;
   }
   .generation-buttons button:hover {
     background-color: #676798;

@@ -34,11 +34,7 @@
 
 <style scoped>
   .generation-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    width: 1000px;
+    max-width: 1000px;
     font-size: 1.3rem;
     padding: 20px 20px;
     border: 2px solid #676798;
@@ -56,15 +52,14 @@
   .generation-header-info {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
     justify-content: space-around;
+    align-items: center;
   }
 
   .generation-header p {
     flex: 1 0 auto;
     line-height: 1.8rem;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 15px;
   }
 
   .odometer.odometer-theme-default {

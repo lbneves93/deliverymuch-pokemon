@@ -79,7 +79,6 @@ export default {
     justify-content: flex-start;
     margin-bottom: 20px;
     padding-bottom: 20px;
-    margin-right: 20px;
     border-left: 1px solid #676798;
     border-right: 1px solid #676798;
     border-radius: 5px;

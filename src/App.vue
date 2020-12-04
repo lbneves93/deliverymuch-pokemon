@@ -145,7 +145,7 @@
     color: whitesmoke;
   }
   .active {
-    background-color: #676798;
+    background-color: #676798 !important;
     color: whitesmoke;
   }
 </style>

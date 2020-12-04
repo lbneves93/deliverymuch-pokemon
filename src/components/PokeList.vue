@@ -112,12 +112,16 @@
   .pagination button {
     cursor: pointer;
     width: 100px;
-    background: #9595b7;
+    height: 30px;
+    background-color: #a4a4c1;
     outline: none;
     border: 1px solid #676798;
+    border-radius: 5px;
+    font-size: 1.0rem;
   }
 
   .pagination button:hover {
     background-color: #676798;
+    color: whitesmoke;
   }
 </style>

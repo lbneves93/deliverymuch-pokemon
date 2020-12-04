@@ -1,7 +1,7 @@
 <template>
   <div class="poke-card">
     <header>
-      {{ '#'+pokemon.id }} - {{ pokemon.name }}
+      {{ '#'+pokemon.id }} - {{ pokemon.name | capitalize }}
     </header>
     <div class="pokemon-img">
       <img

@@ -3,17 +3,24 @@
     <legend>Generation Information</legend>
     <div class="generation-header-info">
       <p>Name: <strong>{{ generation.name | generation }}</strong></p>
-      <p>Main Region: <strong>{{ generation.main_region.name }}</strong></p>
-      <p>Number of Pokemons: <strong>{{ generation.pokemon_species.length }}</strong></p>
-      <p>Number of Moves: <strong>{{ generation.moves.length }}</strong></p>
-      <p>Number of Abilities: <strong>{{ generation.abilities.length }}</strong></p>
+      <p>Main Region: <strong>{{ generation.main_region.name | capitalize }}</strong></p>
+      <p>Pokemons: <strong><IOdometer :value="generation.pokemon_species.length"></IOdometer></strong></p>
+      <p>Moves: <strong><IOdometer :value="generation.moves.length"></IOdometer></strong></p>
+      <p>Abilities: <strong><IOdometer :value="generation.abilities.length"></IOdometer></strong></p>
+      
     </div>  
   </fieldset>
 </template>
 
 <script>
+  import IOdometer from 'vue-odometer'
+  import 'odometer/themes/odometer-theme-default.css';
+
   export default {
     name: 'GenerationHeader',
+    components: {
+      IOdometer
+    },
     computed: {
       generation: {
         get: function () {
@@ -31,8 +38,8 @@
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    max-width: 600px;
-    font-size: 1.5rem;
+    width: 1000px;
+    font-size: 1.3rem;
     padding: 20px 20px;
     border: 2px solid #676798;
     border-radius: 5px;
@@ -49,15 +56,19 @@
   .generation-header-info {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-
+    width: 100%;
+    justify-content: space-around;
   }
 
   .generation-header p {
-    flex: 1 0 300px;
+    flex: 1 0 auto;
     line-height: 1.8rem;
     margin-top: 5px;
     margin-bottom: 5px;
+  }
+
+  .odometer.odometer-theme-default {
+    font-family: 'Nunito Sans', Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
   }
 </style>

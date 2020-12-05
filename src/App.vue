@@ -1,34 +1,18 @@
 <template>
   <div id="app">
     <h1 class="title">Pokemon Generations</h1>
-    <div class="fields">
-      <!-- <select 
-        v-model="selectedGeneration"
-        @change="loadGeneration()"
+    <div class="generation-buttons">
+      <button 
+        v-for="(generation, key) in generations"
+        :key="key"
+        @click="loadGeneration(key+1)"
+        :class="selectedGeneration == key+1 ? 'active' : ''"
       >
-        <option disabled value="">Selecione uma geração...</option>
-        <option 
-          v-for="(generation, key) in generations" 
-          :key="key"
-          :value="key+1"
-        >
-          {{ generation.name }}
-        </option>
-      </select> -->
-      <div class="generation-buttons">
-        <button 
-          v-for="(generation, key) in generations"
-          :key="key"
-          @click="loadGeneration(key+1)"
-          :class="selectedGeneration == key+1 ? 'active' : ''"
-        >
-          {{ generation.name | generation }}
-        </button>
-      </div>
-      <GenerationHeader class="generation-header" :generationId="selectedGeneration"/>
-      <!-- <input v-model="search" type="text" placeholder="Pesquisar..."> -->
-    </div>
-    <PokeList class="poke-list"/>
+        {{ generation.name | generation }}
+      </button>
+    </div>  
+    <GenerationHeader class="generation-header" :generationId="selectedGeneration"/>
+    <PokeList :pokemonIds="getPokemonIds()" class="poke-list"/>
   </div>
 </template>
 
@@ -45,8 +29,7 @@
     data: function () {
       return {
         generations: [],
-        selectedGeneration: 1,
-        search: ''
+        selectedGeneration: 1
       }
     },
     created: async function () {
@@ -58,6 +41,9 @@
       loadGeneration: function (id) {
         this.selectedGeneration = id;
         this.$store.dispatch('showGeneration', id);
+      },
+      getPokemonIds: function () {
+        return this.$store.state.generation.pokemon_species.map(pokemon => Number(pokemon.url.split('/')[6])).sort((a,b) => a-b);
       }
     }
   }
@@ -81,7 +67,7 @@
     align-items: center;
     flex-direction: column;
     margin: 0 auto;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
   .title {
@@ -93,35 +79,6 @@
     max-width: 90%;
   }
 
-  .fields {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    padding: 10px;
-    justify-content: space-around;
-    max-width: 90%;
-  }
-
-  .fields select {
-    flex: 1;
-    height: 30px;
-    border: 1px solid #9595b7;
-    border-radius: 5%;
-    box-shadow: 0 0 5px #9595b7;
-    margin-right: 50px;
-  }
-
-  .fields input {
-    flex: 1;
-    border: 1px solid #9595b7;
-    border-radius: 5%;
-    outline: none;
-    box-shadow: 0 0 5px #9595b7;
-    margin-left: 50px;
-  }
-
   .generation-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -129,6 +86,7 @@
     align-items: center;
     margin: 20px;
   }
+
 
   .generation-buttons button {
     border: 1px solid #676798;
@@ -140,10 +98,12 @@
     flex: 1 1 auto;
     margin: 5px;
   }
+  
   .generation-buttons button:hover {
     background-color: #676798;
     cursor: pointer;
   }
+  
   .generation-buttons button:focus {
     background-color: #676798;
     cursor: pointer;

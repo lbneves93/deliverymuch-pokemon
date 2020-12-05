@@ -6,8 +6,7 @@
       <p>Main Region: <strong>{{ generation.main_region.name | capitalize }}</strong></p>
       <p>Pokemons: <strong><IOdometer :value="generation.pokemon_species.length"></IOdometer></strong></p>
       <p>Moves: <strong><IOdometer :value="generation.moves.length"></IOdometer></strong></p>
-      <p>Abilities: <strong><IOdometer :value="generation.abilities.length"></IOdometer></strong></p>
-      
+      <p>Abilities: <strong><IOdometer :value="generation.abilities.length"></IOdometer></strong></p>      
     </div>  
   </fieldset>
 </template>
@@ -30,7 +29,6 @@
     }
   }
 </script>
-
 
 <style scoped>
   .generation-header {

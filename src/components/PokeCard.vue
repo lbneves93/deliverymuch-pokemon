@@ -31,41 +31,7 @@ export default {
   },
   props: {
     pokemon: Object
-  },
-  // data: () => {
-  //   return {
-  //     pokemon: {
-  //       id: 0,
-  //       sprites: {
-  //         front_default: ''
-  //       },
-  //       abilities: [
-  //         {
-  //           ability: {
-  //             name: ''
-  //           }
-  //         }  
-  //       ],
-  //       moves: [
-  //         {
-  //           move: {
-  //             name: ''
-  //           }
-  //         }  
-  //       ],
-  //       types: [
-  //         {
-  //           type: {
-  //             name: ''
-  //           }
-  //         }  
-  //       ]
-  //     }
-  //   }
-  // },
-  // mounted: async function () {
-  //   this.pokemon = await this.$store.dispatch('showPokemon', this.pokemonId);
-  // }
+  }
 }
 </script>
 
@@ -117,5 +83,4 @@ export default {
     width: 150px;
     height: 150px;
   }
-  
 </style>

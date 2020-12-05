@@ -5,10 +5,12 @@
       <PokeCard 
         v-for="pokemon in pokemons" 
         :key="pokemon.name"
-        :pokemonId="pokemon.url.split('/')[6]"
+        :pokemon="pokemon"
       />
-    </div> 
-    <div class="pagination">
+    </div>
+    <scroll-loader :loader-method="nextPage" :loader-disable="page >= totalPokemons / limit">
+    </scroll-loader>
+    <!-- <div class="pagination">
       <button 
         @click="backPage()"
         :disabled="page == 1"
@@ -22,7 +24,7 @@
       >
         Next
       </button>
-    </div>
+    </div> -->
   </fieldset>
 </template>
 
@@ -34,19 +36,22 @@
     components: {
       PokeCard
     },
-    props: {
-      pokemonsList: Array
-    },
     data: function () {
       return {
         page: 1,
-        limit: 20,
-        offset: 0       
+        limit: 10,
+        offset: 0,
+        pokemons: []   
       }
     },
+    mounted: function () {
+      this.paginatedPokemons();
+    },
     computed: {
-      pokemons: function() {
-        return this.$store.state.generation.pokemon_species.slice(this.offset, this.page * this.limit);
+      pokemonIds: function () {
+        return this.$store.state.generation.pokemon_species
+          .slice(this.offset, this.page * this.limit)
+          .map(pokemon => pokemon.url.split('/')[6])
       },
       generation: function() {
         return this.$store.state.generation;
@@ -60,20 +65,30 @@
         if(newGeneration != oldGeneration) {
           this.page = 1;
           this.offset = 0;
+          this.pokemons = [];
+          this.paginatedPokemons();
         }
       }
     },
     methods: {
-      paginatedPokemons: function () {
-        return this.pokemonsList.slice(this.offset, this.page * this.limit);
+      paginatedPokemons: async function () {
+        var newPokemonPage = [];
+        var pokemonId;
+        for(pokemonId of this.pokemonIds) {
+          let newPokemon = await this.$store.dispatch('showPokemon', pokemonId)
+          newPokemonPage.push(newPokemon);
+        }
+        
+        this.pokemons = [...this.pokemons, ...newPokemonPage]
       },
-      backPage: function () {
-        this.offset -= this.limit;
-        this.page--;
-      },
+      // backPage: function () {
+      //   this.offset -= this.limit;
+      //   this.page--;
+      // },
       nextPage: function () {
         this.offset += this.limit;
         this.page++;
+        this.paginatedPokemons();
       }
     }
   }

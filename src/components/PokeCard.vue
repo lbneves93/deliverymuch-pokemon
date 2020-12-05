@@ -30,42 +30,42 @@ export default {
     Skeleton
   },
   props: {
-    pokemonId: String
+    pokemon: Object
   },
-  data: () => {
-    return {
-      pokemon: {
-        id: 0,
-        sprites: {
-          front_default: ''
-        },
-        abilities: [
-          {
-            ability: {
-              name: ''
-            }
-          }  
-        ],
-        moves: [
-          {
-            move: {
-              name: ''
-            }
-          }  
-        ],
-        types: [
-          {
-            type: {
-              name: ''
-            }
-          }  
-        ]
-      }
-    }
-  },
-  mounted: async function () {
-    this.pokemon = await this.$store.dispatch('showPokemon', this.pokemonId);
-  }
+  // data: () => {
+  //   return {
+  //     pokemon: {
+  //       id: 0,
+  //       sprites: {
+  //         front_default: ''
+  //       },
+  //       abilities: [
+  //         {
+  //           ability: {
+  //             name: ''
+  //           }
+  //         }  
+  //       ],
+  //       moves: [
+  //         {
+  //           move: {
+  //             name: ''
+  //           }
+  //         }  
+  //       ],
+  //       types: [
+  //         {
+  //           type: {
+  //             name: ''
+  //           }
+  //         }  
+  //       ]
+  //     }
+  //   }
+  // },
+  // mounted: async function () {
+  //   this.pokemon = await this.$store.dispatch('showPokemon', this.pokemonId);
+  // }
 }
 </script>
 
